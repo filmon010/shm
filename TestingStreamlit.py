@@ -26,6 +26,6 @@ for f in files:
 df = pd.concat(li, axis=0, ignore_index=True)
 print(df.shape)
 df
-st.altair_chart(df)
+#st.altair_chart(df)
 
 
