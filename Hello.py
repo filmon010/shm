@@ -25,7 +25,35 @@ for f in files:
 
 df = pd.concat(li, axis=0, ignore_index=True)
 print(df.shape)
+st.header("Raw data")
 df
-#st.altair_chart(df)
+
+#Data from Channel 0 only
+ch0_df = df = df.loc[:, :'CH0S004 (1561,810 ; x)']
+
+#Clean rows with NaN values
+cleaned_df = ch0_df.dropna()
+
+#Concatenate UTC Date and UTC Time 
+cleaned_df['Sample'] = pd.to_datetime(cleaned_df['UTC Date'] + ' ' + cleaned_df['UTC Time'])
+cleaned_df.rename(columns={'Sample':'UTC DateTime'}, inplace=True)
+
+#Drop redundant columns now that UTC DateTime is created
+cleaned_df_v2 = cleaned_df.drop('UTC Date', axis=1)
+cleaned_df_v2 = cleaned_df_v2.drop('UTC Time', axis=1)
+st.header("Cleaned Data")
+cleaned_df_v2
+
+#Plotting the wide dataframe
+st.header("Strain VS Time")
+st.scatter_chart(
+    cleaned_df_v2,
+    x = 'UTC DateTime',
+    y = cleaned_df_v2.columns[1:],
+    height=440
+)
+
+#Dataframe info
+cleaned_df_v2.info()
 
 
