@@ -29,7 +29,7 @@ st.header("Raw data")
 df
 
 #Data from Channel 0 only
-ch0_df = df.iloc[:, :11]
+ch0_df = df.iloc[:, :12]
 
 #Clean rows with NaN values
 cleaned_df = ch0_df.dropna(axis=0, how='any')
