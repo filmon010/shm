@@ -29,10 +29,10 @@ st.header("Raw data")
 df
 
 #Data from Channel 0 only
-ch0_df = df = df.loc[:, :'CH0S004 (1561,810 ; x)']
+ch0_df = df.iloc[:, :7]
 
 #Clean rows with NaN values
-cleaned_df = ch0_df.dropna()
+cleaned_df = ch0_df.dropna(axis=0, how='any')
 
 #Concatenate UTC Date and UTC Time 
 cleaned_df['Sample'] = pd.to_datetime(cleaned_df['UTC Date'] + ' ' + cleaned_df['UTC Time'])
@@ -55,5 +55,3 @@ st.scatter_chart(
 
 #Dataframe info
 cleaned_df_v2.info()
-
-
